@@ -1,0 +1,5 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:usvg="https://github.com/RazrFalcon/resvg" usvg:version="0.13.1">
+    <defs/>
+    <path fill="none" stroke="#ea4747" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M 16 7 C 16 9.20914 14.2091 11 12 11 C 9.79086 11 8 9.20914 8 7 C 8 4.79086 9.79086 3 12 3 C 14.2091 3 16 4.79086 16 7 Z"/>
+    <path fill="none" stroke="#ea4747" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M 12 14 C 8.13401 14 5 17.134 5 21 L 19 21 C 19 17.134 15.866 14 12 14 Z"/>
+</svg>
