@@ -5,17 +5,23 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class FDModal extends StatelessWidget {
   const FDModal(
-      {Key? key, required this.title, required this.body, this.tringleView})
+      {Key? key,
+      required this.title,
+      required this.body,
+      this.tringleView,
+      this.bottomChild})
       : super(key: key);
 
   final String title;
   final Widget body;
   final Widget? tringleView;
+  final Widget? bottomChild;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
@@ -24,9 +30,7 @@ class FDModal extends StatelessWidget {
               tringleView ?? const SizedBox(),
               Text(
                 title,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: theme.textTheme.bodyLarge,
               ),
               const Spacer(),
               SimpleButton(
@@ -51,6 +55,7 @@ class FDModal extends StatelessWidget {
           Expanded(
             child: body,
           ),
+          bottomChild ?? SizedBox()
         ],
       ),
     );

@@ -1,9 +1,4 @@
-//
-//  PassportUtil.swift
-//  FeedNFCReader
-//
-//  Created by AlqasemDev on 7/30/22.
-//
+
 import Foundation
 import Flutter
 import NFCPassportReader

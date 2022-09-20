@@ -23,9 +23,12 @@ enum AccountStatus {
   notUpdateName
 }
 
+const steps = [0, 4, 5, 6, 7, 8, 9, 10];
+
 class OnBoardingController extends GetxController {
   final selectLanguage = 0.obs;
-  final steps = 0.0.obs;
+
+  final selectSteps = 0.obs;
   final box = GetStorage();
   TextEditingController phoneController = TextEditingController();
   TextEditingController code1Controller = TextEditingController();
@@ -54,10 +57,10 @@ class OnBoardingController extends GetxController {
           await http.post(url, body: json.encode(body), headers: headers);
 
       loadingSentOtp.value = false;
-      print("api:status code==${response.statusCode}===\n==${response.body}");
+      // print("api:status code==${response.statusCode}===\n==${response.body}");
       // print(json.encode(body));
       if (response.statusCode == 200) {
-        steps.value = 6;
+        selectSteps.value = 3;
         return AccountStatus.sentOtp;
       } else if (response.statusCode == 400) {
         try {
@@ -80,11 +83,15 @@ class OnBoardingController extends GetxController {
     }
   }
 
+  final isCardReaderShow = false.obs;
   getToken() async {
     if (box != null) {
       otpToken.value = box.read("otpToken");
-      if (otpToken.value.isNotEmpty) {
-        steps.value = 7;
+      if (otpToken.value != null && otpToken.value.isNotEmpty) {
+        selectSteps.value = steps.indexWhere((element) => element == 7);
+
+        // Future.delayed(const Duration(seconds: 1))
+        //     .then((value) => isCardReaderShow.value = true);
       }
     }
   }
@@ -119,17 +126,5 @@ class OnBoardingController extends GetxController {
       showSnackbar(context, subtitle: "error", style: SnackbarStyle.error);
       return AccountStatus.verfiError;
     }
-  }
-
-  void showOverlay(BuildContext context, {required String text}) async {
-    OverlayState? overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry;
-    overlayEntry = OverlayEntry(builder: (context) {
-      return Positioned(
-          bottom: 0, left: 0, right: 0, child: BottomSectionView());
-    });
-
-    // inserting overlay entry
-    overlayState!.insert(overlayEntry);
   }
 }

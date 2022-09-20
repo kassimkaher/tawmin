@@ -13,6 +13,7 @@ const kOutlineColor = Color(0xFF41444A);
 const kPrimary = Color(0xFF1FA35E);
 const kSecondaryColor = Color(0xFFFFC000);
 const kGray1 = Color(0xFFF2F3F4);
+const kErrorColor = Color(0xFFEA4747);
 MaterialColor createMaterialColor(Color color) {
   final strengths = <double>[.05];
   final swatch = <int, Color>{};

@@ -70,20 +70,22 @@ getTheme(BuildContext context) {
           iconTheme: const IconThemeData(color: Colors.black),
           textTheme: theme.textTheme.copyWith(
             titleLarge: theme.textTheme.titleLarge
-                ?.copyWith(fontSize: 40, color: kPrimary),
-            titleMedium: theme.textTheme.titleMedium
-                ?.copyWith(fontSize: 28, fontWeight: FontWeight.w600),
+                ?.copyWith(fontSize: 40, color: kPrimary, fontFamily: 'Somar'),
+            titleMedium: theme.textTheme.titleMedium?.copyWith(
+                fontSize: 24, fontWeight: FontWeight.w600, fontFamily: 'Somar'),
             titleSmall: theme.textTheme.titleSmall?.copyWith(
-              fontSize: 16,
-              color: Color(0xFF87909F),
-            ),
-            bodyLarge: theme.textTheme.bodyLarge?.copyWith(),
-            bodyMedium: theme.textTheme.bodyMedium?.copyWith(),
+                fontSize: 16, color: Color(0xFF87909F), fontFamily: 'Somar'),
+            bodyLarge: theme.textTheme.bodyLarge?.copyWith(fontFamily: 'Somar'),
+            bodyMedium:
+                theme.textTheme.bodyMedium?.copyWith(fontFamily: 'Somar'),
             bodySmall: theme.textTheme.bodySmall?.copyWith(
+              fontFamily: 'Somar',
               color: const Color(0xFFA0A0A0),
             ),
-            displaySmall: theme.textTheme.bodyText2
-                ?.copyWith(color: const Color(0xFF97A0AA), fontSize: 14),
+            displaySmall: theme.textTheme.bodyText2?.copyWith(
+                color: const Color(0xFF97A0AA),
+                fontSize: 14,
+                fontFamily: 'Somar'),
           ),
           splashColor: Colors.transparent,
           highlightColor: const Color(0x11440099),

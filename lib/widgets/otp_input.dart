@@ -62,7 +62,7 @@ class OTPWdiget extends HookWidget {
           borderRadius: BorderRadius.circular(
             kDefaultBorderRadius,
           ),
-          borderSide: BorderSide(color: theme.colorScheme.outline),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
@@ -80,11 +80,11 @@ class OTPWdiget extends HookWidget {
           borderRadius: BorderRadius.circular(
             kDefaultBorderRadius,
           ),
-          borderSide: BorderSide(color: theme.colorScheme.outline),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
       ),
       textAlign: TextAlign.center,
-      style: theme.textTheme.titleSmall?.copyWith(
+      style: theme.textTheme.bodyMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),
       validator: (h) {

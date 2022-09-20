@@ -4,8 +4,7 @@ import 'package:flutter/material.dart' as M;
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:tamine/controller/on_boarding_controller.dart';
-import 'package:tamine/main.dart';
-import 'package:tamine/pages/input_information_page.dart';
+
 import 'package:tamine/services/validation.dart';
 
 import 'package:tamine/utils/utils.dart';
@@ -42,18 +41,26 @@ class OnBordingView extends StatelessWidget {
                               left: kDefaultPadding, right: kDefaultPadding),
                           duration:
                               const Duration(milliseconds: kDefaultDuration),
-                          height: controller.steps.value > 6
+                          height: steps[controller.selectSteps.value] > 6
                               ? 0
-                              : query.size.height /
-                                  (controller.steps.value == 0
-                                      ? 2.81333
-                                      : controller.steps.value == 4
-                                          ? 1
-                                          : controller.steps.value == 5
-                                              ? 2.8
-                                              : controller.steps.value == 6
-                                                  ? 1.7
-                                                  : 2.6375),
+                              : steps[controller.selectSteps.value] == 0
+                                  ? query.size.height * 0.353
+                                  : query.size.height /
+                                      (steps[controller.selectSteps.value] == 0
+                                          ? 2.81333
+                                          : steps[controller
+                                                      .selectSteps.value] ==
+                                                  4
+                                              ? 1
+                                              : steps[controller
+                                                          .selectSteps.value] ==
+                                                      5
+                                                  ? 2.9
+                                                  : steps[controller.selectSteps
+                                                              .value] ==
+                                                          6
+                                                      ? 1.8
+                                                      : 2.6375),
                           width: query.size.width,
                           decoration: BoxDecoration(
                             color: theme.appBarTheme.backgroundColor,
@@ -63,192 +70,27 @@ class OnBordingView extends StatelessWidget {
                           child: Stack(
                             children: [
                               TextView(query: query.size, theme: theme),
-                              TextView1(query: query.size, theme: theme),
-                              TextView2(query: query.size, theme: theme),
-                              TextView3(query: query.size, theme: theme),
                               TextView4(query: query.size, theme: theme),
                               const TextViewPhone()
                             ],
                           )),
                     ),
-                    const IndicatorView(),
+                    //   const IndicatorView(),
                     const ImageViewFirst(),
-                    const ImageView(
-                      currentStep: 1,
-                      impath: "assets/images/onboarding1.png",
-                    ),
-                    const ImageViewThird(),
-                    const ImageView(
-                      currentStep: 3,
-                      impath: "assets/images/onboarding3.png",
-                    ),
+                    // const ImageView(
+                    //   currentStep: 1,
+                    //   impath: "assets/images/onboarding1.png",
+                    // ),
+                    // const ImageViewThird(),
+                    // const ImageView(
+                    //   currentStep: 3,
+                    //   impath: "assets/images/onboarding3.png",
+                    // ),
                     // const ButtonView(),
                   ],
                 ),
               )
             : const SizedBox(),
-      ),
-    );
-  }
-}
-
-class TextView extends GetView<OnBoardingController> {
-  const TextView({
-    Key? key,
-    required this.query,
-    required this.theme,
-  }) : super(key: key);
-
-  final Size query;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSlide(
-      offset:
-          controller.steps.value == 0 ? const Offset(0, 0) : const Offset(1, 0),
-      duration: const Duration(milliseconds: kDefaultDuration),
-      child: ListTile(
-        contentPadding: EdgeInsets.all(kDefaultPadding),
-        title: Text(
-          "title".tr(),
-          style: theme.textTheme.titleLarge,
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("desc".tr()),
-            const Divider(),
-            Text("desc1".tr()),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TextView1 extends GetView<OnBoardingController> {
-  const TextView1({
-    Key? key,
-    required this.query,
-    required this.theme,
-  }) : super(key: key);
-
-  final Size query;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSlide(
-      offset: controller.steps.value == 1
-          ? const Offset(0, 0)
-          : controller.steps.value < 1
-              ? const Offset(-1, 0)
-              : const Offset(1, 0),
-      duration: const Duration(milliseconds: kDefaultDuration),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListTile(
-            contentPadding: const EdgeInsets.all(kDefaultPadding),
-            title: Text(
-              "title1".tr(),
-              style: theme.textTheme.titleLarge,
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("desc2".tr()),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TextView2 extends GetView<OnBoardingController> {
-  const TextView2({
-    Key? key,
-    required this.query,
-    required this.theme,
-  }) : super(key: key);
-
-  final Size query;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSlide(
-      offset: controller.steps.value == 2
-          ? const Offset(0, 0)
-          : controller.steps.value < 2
-              ? const Offset(-1, 0)
-              : const Offset(1, 0),
-      duration: const Duration(milliseconds: kDefaultDuration),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListTile(
-            contentPadding: const EdgeInsets.all(kDefaultPadding),
-            title: Text(
-              "title2".tr(),
-              style: theme.textTheme.titleLarge,
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("desc3".tr()),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TextView3 extends GetView<OnBoardingController> {
-  const TextView3({
-    Key? key,
-    required this.query,
-    required this.theme,
-  }) : super(key: key);
-
-  final Size query;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSlide(
-      offset: controller.steps.value == 3
-          ? const Offset(0, 0)
-          : controller.steps.value < 3
-              ? const Offset(-1, 0)
-              : const Offset(0, -0.35),
-      duration: const Duration(milliseconds: kDefaultDuration),
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: kDefaultDuration),
-        opacity: controller.steps.value <= 3 ? 1 : 0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ListTile(
-              contentPadding: const EdgeInsets.all(kDefaultPadding),
-              title: Text(
-                "title3".tr(),
-                style: theme.textTheme.titleLarge,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("desc4".tr()),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -268,17 +110,17 @@ class TextView4 extends GetView<OnBoardingController> {
   Widget build(BuildContext context) {
     return Obx(
       () => AnimatedSlide(
-        offset: controller.steps.value < 4
+        offset: steps[controller.selectSteps.value] < 4
             ? const Offset(0, 0.3)
-            : controller.steps.value > 4
+            : steps[controller.selectSteps.value] > 4
                 ? const Offset(0, 0.2)
                 : const Offset(0, 0),
         duration: const Duration(milliseconds: kDefaultDuration),
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: kDefaultDuration),
-          opacity: controller.steps.value == 4 ? 1 : 0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+          opacity: steps[controller.selectSteps.value] == 4 ? 1 : 0,
+          child: ListView(
+            //  mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: kDefaultPadding),
               ListTile(
@@ -291,142 +133,38 @@ class TextView4 extends GetView<OnBoardingController> {
                 subtitle: AnimatedContainer(
                   duration: const Duration(milliseconds: kDefaultDuration),
                   margin: const EdgeInsets.only(top: kDefaultPadding * 2),
-                  // height: controller.steps.value == 4 ? query.height / 2 : 10,
+                  // height: steps[controller.selectSteps.value] == 4 ? query.height / 2 : 10,
                   height: query.height / 2,
                   child: SingleChildScrollView(
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "سوف يتم التأكد من رقم هاتفك, فتأكد من ان رقم هاتفك يعمل بشكل صحيح ولا تقدم اكثر من مرة.",
-                          "استعد قبل البدء بعملية التقديم, ستحتاج الى الوثائق الشخصية الثبوتية الخاصة بك اثناء عملية التقديم.",
-                          "تأكد من ادخال معلوماتك الصحيحة وفي حالة استخدامك لمعلومات وهمية او لمعلومات شخص اخر او اخفاء اية معلومات مطلوبة فستعرض نفسك الى المحاسبة القانونية والعقوبات القضائية.",
-                          "يقوم الموقع بحفظ كافة المعلومات المدخلة لتتم مراجعتها لاحقا وتدقيقها مع الجهات الحكومية.",
-                          "ان قيامك بعملية التقديم يعني تعهدك بقراءة وفهم هذه التعليمات وموافقتك على الشروط والاحكام المتعلقة."
-                        ]
-                            .map((e) => ListTile(
-                                  leading: const SizedBox(
-                                    width: 10,
-                                    child: Icon(
-                                      Icons.circle,
-                                      size: 8,
-                                    ),
-                                  ),
-                                  horizontalTitleGap: 0,
-                                  title: Text(
-                                    e,
-                                    style: theme.textTheme.bodySmall,
-                                    overflow: TextOverflow.clip,
-                                  ),
-                                ))
-                            .toList()),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "سوف يتم التأكد من رقم هاتفك, فتأكد من ان رقم هاتفك يعمل بشكل صحيح ولا تقدم اكثر من مرة.",
+                        "استعد قبل البدء بعملية التقديم, ستحتاج الى الوثائق الشخصية الثبوتية الخاصة بك اثناء عملية التقديم.",
+                        "تأكد من ادخال معلوماتك الصحيحة وفي حالة استخدامك لمعلومات وهمية او لمعلومات شخص اخر او اخفاء اية معلومات مطلوبة فستعرض نفسك الى المحاسبة القانونية والعقوبات القضائية.",
+                        "يقوم الموقع بحفظ كافة المعلومات المدخلة لتتم مراجعتها لاحقا وتدقيقها مع الجهات الحكومية.",
+                        "ان قيامك بعملية التقديم يعني تعهدك بقراءة وفهم هذه التعليمات وموافقتك على الشروط والاحكام المتعلقة."
+                      ]
+                          .map(
+                            (e) => ListTile(
+                              leading: const SizedBox(
+                                width: 10,
+                                child: Icon(
+                                  Icons.circle,
+                                  size: 8,
+                                ),
+                              ),
+                              horizontalTitleGap: 0,
+                              title: Text(
+                                e,
+                                style: theme.textTheme.bodySmall,
+                                overflow: TextOverflow.clip,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonView extends GetView<OnBoardingController> {
-  const ButtonView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final query = MediaQuery.of(context).size;
-    return Obx(
-      () => Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: Container(
-          margin: const EdgeInsets.all(kDefaultPadding),
-          alignment: Alignment.center,
-          height: query.height / 15,
-          width: query.width,
-          child: Stack(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: kDefaultDuration),
-                height: query.height / 15,
-                width: query.height / 15,
-                margin: EdgeInsets.only(
-                    right: controller.steps.value < 1
-                        ? (query.height / 15) + kDefaultPadding / 2
-                        : 0),
-                child: FDButton(
-                  title: "",
-                  icon: Icons.arrow_back,
-                  backgroundColor: theme.colorScheme.surface,
-                  color: Colors.black,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    controller.steps.value--;
-                    controller.steps.value =
-                        (controller.steps.value ~/ 1).toDouble();
-                  },
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: kDefaultDuration),
-                child: const SizedBox(width: kDefaultPadding / 2),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: kDefaultDuration),
-                margin: EdgeInsets.only(
-                    right: controller.steps.value >= 1
-                        ? (query.height / 15) + kDefaultPadding / 2
-                        : 0),
-                child: FDButton(
-                  isLoading: controller.loadingSentOtp.value ||
-                      controller.loadingVerfiOtp.value,
-                  title: controller.steps.value == 0
-                      ? "lets_go".tr()
-                      : controller.steps.value >= 1 &&
-                              controller.steps.value < 3
-                          ? "next".tr()
-                          : controller.steps.value == 3
-                              ? "brgin".tr()
-                              : controller.steps.value == 4
-                                  ? "fill_data".tr()
-                                  : controller.steps.value == 5
-                                      ? "accept".tr()
-                                      : controller.steps.value == 6
-                                          ? "confirm".tr()
-                                          : "open_account".tr(),
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    controller.showOverlay(context, text: "text");
-                    if (controller.steps.value < 5) {
-                      controller.steps.value++;
-                    }
-                    if (controller.steps.value == 6 &&
-                        controller.codeForm.currentState!.validate()) {
-                      controller.verfiOtpApi(
-                        int.parse(controller.phoneController.text),
-                        "${controller.code1Controller.text}${controller.code2Controller.text}${controller.code3Controller.text}${controller.code4Controller.text}${controller.code5Controller.text}${controller.code6Controller.text}",
-                        context,
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => InputInformationPage(),
-                          ),
-                        ),
-                      );
-                    }
-
-                    if (controller.steps.value == 5 &&
-                        controller.nameForm.currentState!.validate()) {
-                      controller.requestOtpApi(
-                          int.parse(controller.phoneController.text), context);
-                    }
-                  },
                 ),
               ),
             ],
@@ -444,34 +182,44 @@ class ImageViewFirst extends GetView<OnBoardingController> {
 
   @override
   Widget build(BuildContext context) {
-    final query = MediaQuery.of(context).size;
+    final query = MediaQuery.of(context);
 
     return Obx(
-      () => Align(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            SizedBox(
-              height: query.height / 2.08,
-              width: query.width,
-              child: AnimatedSlide(
-                duration: const Duration(milliseconds: kDefaultDuration),
-                offset: controller.steps.value == 0
-                    ? const Offset(0, 0)
-                    : const Offset(1, 0),
-                child: Container(
-                  padding: const EdgeInsets.only(top: 0),
-                  child: Image.asset(
-                    "assets/images/onboarding.png",
-                    fit: BoxFit.fill,
+      () => AnimatedSlide(
+        duration: const Duration(milliseconds: kDefaultDuration),
+        offset: steps[controller.selectSteps.value] == 0
+            ? Offset(0, 0)
+            : Offset(1, 0),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              SizedBox(
+                height: (query.size.height * 0.5864) -
+                    20 -
+                    query.viewInsets.top -
+                    kDefaultPadding * 2 -
+                    query.size.height / 15,
+                width: query.size.width,
+                child: AnimatedSlide(
+                  duration: const Duration(milliseconds: kDefaultDuration),
+                  offset: steps[controller.selectSteps.value] == 0
+                      ? const Offset(0, 0)
+                      : const Offset(1, 0),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 0),
+                    child: Image.asset(
+                      "assets/images/onboarding.png",
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const LanguageChooserView(
-              step: 0,
-            )
-          ],
+              const LanguageChooserView(
+                step: 0,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -495,18 +243,22 @@ class ImageView extends GetView<OnBoardingController> {
           width: query.width - 64,
           child: AnimatedSlide(
             duration: const Duration(milliseconds: kDefaultDuration),
-            offset: controller.steps.value == currentStep
+            offset: steps[controller.selectSteps.value] == currentStep
                 ? const Offset(0, 0)
-                : controller.steps.value < currentStep
+                : steps[controller.selectSteps.value] < currentStep
                     ? const Offset(-1.5, 0)
-                    : controller.steps.value == 4 && currentStep == 3
+                    : steps[controller.selectSteps.value] == 4 &&
+                            currentStep == 3
                         ? const Offset(0, -1.2)
                         : currentStep == 3
                             ? const Offset(0, -1.2)
                             : const Offset(1.5, 0),
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: kDefaultDuration),
-              opacity: currentStep == 3 && controller.steps.value > 3 ? 0 : 1,
+              opacity:
+                  currentStep == 3 && steps[controller.selectSteps.value] > 3
+                      ? 0
+                      : 1,
               child: Image.asset(
                 impath,
                 fit: BoxFit.fill,
@@ -536,9 +288,9 @@ class ImageViewThird extends GetView<OnBoardingController> {
           width: query.width - 64,
           child: AnimatedSlide(
             duration: const Duration(milliseconds: kDefaultDuration),
-            offset: controller.steps.value == 2
+            offset: steps[controller.selectSteps.value] == 2
                 ? const Offset(0, 0)
-                : controller.steps.value < 2
+                : steps[controller.selectSteps.value] < 2
                     ? const Offset(-1, 0)
                     : const Offset(1.5, 0),
             child: Container(
@@ -565,16 +317,17 @@ class LanguageChooserView extends GetView<OnBoardingController> {
     return Obx(
       () => AnimatedSlide(
         duration: const Duration(milliseconds: kDefaultDuration),
-        offset: controller.steps.value == step
+        offset: steps[controller.selectSteps.value] == step
             ? const Offset(0, 0)
-            : controller.steps.value > step
+            : steps[controller.selectSteps.value] > step
                 ? const Offset(1.5, 0)
-                : controller.steps.value < step
+                : steps[controller.selectSteps.value] < step
                     ? const Offset(-1.5, 0)
                     : const Offset(1, 0),
         child: Container(
           height: query.height / 15,
-          margin: const EdgeInsets.only(top: 16, left: 28, right: 28),
+          margin:
+              const EdgeInsets.only(top: kDefaultPadding, left: 28, right: 28),
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -630,9 +383,9 @@ class IndicatorView extends GetView<OnBoardingController> {
         top: query.height / 1.6 + 20,
         child: AnimatedSlide(
           duration: const Duration(milliseconds: kDefaultDuration),
-          offset: controller.steps.value < 1
+          offset: steps[controller.selectSteps.value] < 1
               ? const Offset(-1, 0)
-              : controller.steps.value > 3
+              : steps[controller.selectSteps.value] > 3
                   ? const Offset(1, 0)
                   : const Offset(0, 0),
           child: Row(
@@ -645,7 +398,7 @@ class IndicatorView extends GetView<OnBoardingController> {
                     width: 25,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3),
-                      color: controller.steps.value == e
+                      color: steps[controller.selectSteps.value] == e
                           ? theme.primaryColor
                           : theme.scaffoldBackgroundColor,
                     ),
@@ -671,34 +424,27 @@ class PhoneInterView extends GetView<OnBoardingController> {
       () => Align(
         alignment: Alignment.topCenter,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 100),
-          height: (query.size.height / (controller.steps.value == 6 ? 3 : 1.6)),
-          padding: EdgeInsets.only(bottom: query.viewInsets.bottom),
-          width: query.size.width - 64,
+          duration: const Duration(milliseconds: kDefaultDuration),
+          margin:
+              EdgeInsets.all(steps[controller.selectSteps.value] == 6 ? 0 : 0)
+                  .copyWith(
+            top: steps[controller.selectSteps.value] == 5 ? 103 : 40,
+          ),
+          // padding: EdgeInsets.only(bottom: query.viewInsets.bottom),
+          width: query.size.width,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: kDefaultDuration),
-            opacity: query.viewInsets.bottom > 10
-                ? 0
-                : controller.steps.value == 5 || controller.steps.value == 6
-                    ? 1
-                    : 0,
-            child: Container(
-              padding: const EdgeInsets.only(top: 0),
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Container(
-                    height: query.viewInsets.bottom > 10
-                        ? (query.size.height / 8.44)
-                        : (query.size.height / 8.44),
-                    child: Image.asset(
-                      impath,
-                      fit: BoxFit.fill,
-                      alignment: Alignment.topCenter,
-                    ),
-                  ),
-                  const Spacer(),
-                ],
+            opacity: steps[controller.selectSteps.value] == 5 ||
+                    steps[controller.selectSteps.value] == 6
+                ? 1
+                : 0,
+            child: Transform.scale(
+              scale: steps[controller.selectSteps.value] == 6 ? 1.2 : 1,
+              child: Image.asset(
+                impath,
+                fit: BoxFit.cover,
+                // scale: 10,
+                //width: query.size.width + 100,
               ),
             ),
           ),
@@ -718,17 +464,16 @@ class TextViewPhone extends GetView<OnBoardingController> {
     final theme = Theme.of(context);
     return Obx(
       () => AnimatedSlide(
-        offset: controller.steps.value > 4
+        offset: steps[controller.selectSteps.value] > 4
             ? const Offset(0, 0)
             : const Offset(0, 1),
         duration: const Duration(milliseconds: kDefaultDuration),
         child: ListView(
-          physics: NeverScrollableScrollPhysics(),
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             const SizedBox(height: 32),
             ListTile(
-              contentPadding: EdgeInsets.all(0),
+              contentPadding: EdgeInsets.zero,
               title: Text(
                 "record_phone".tr(),
                 style: theme.textTheme.titleMedium,
@@ -746,7 +491,8 @@ class TextViewPhone extends GetView<OnBoardingController> {
                     bottomPadding: kDefaultPadding,
                     leftPadding: 0,
                     rightPadding: kDefaultPadding,
-                    textInputType: TextInputType.number,
+                    textInputType: const TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
                     borderColor: Colors.transparent,
                     label: "07000000000".tr(),
                   ),
@@ -755,12 +501,12 @@ class TextViewPhone extends GetView<OnBoardingController> {
             ),
             const SizedBox(height: kDefaultPadding * 2),
             AnimatedSlide(
-              offset: controller.steps.value == 6
+              offset: steps[controller.selectSteps.value] == 6
                   ? const Offset(0, 0)
-                  : const Offset(0, 0.7),
+                  : const Offset(0, 0.8),
               duration: const Duration(milliseconds: kDefaultDuration + 100),
               child: ListTile(
-                contentPadding: EdgeInsets.all(0),
+                contentPadding: EdgeInsets.zero,
                 title: Row(
                   children: [
                     Text(
@@ -769,7 +515,7 @@ class TextViewPhone extends GetView<OnBoardingController> {
                     ),
                     const Spacer(),
                     FDButton(
-                      isLoading: controller.steps.value == 6 &&
+                      isLoading: steps[controller.selectSteps.value] == 6 &&
                           controller.loadingSentOtp.value,
                       title: "resend_code".tr(),
                       backgroundColor: Colors.white,
@@ -811,8 +557,9 @@ class OtpView extends GetView<OnBoardingController> {
     final query = MediaQuery.of(context);
     return AnimatedSlide(
       duration: const Duration(milliseconds: kDefaultDuration),
-      offset:
-          controller.steps.value == 6 ? const Offset(0, 0) : const Offset(0, 1),
+      offset: steps[controller.selectSteps.value] == 6
+          ? const Offset(0, 0)
+          : const Offset(0, 1),
       child: Form(
         key: controller.codeForm,
         child: Directionality(
@@ -824,7 +571,7 @@ class OtpView extends GetView<OnBoardingController> {
                 height: 55,
                 width: 55,
                 child: OTPWdiget(
-                  autofocus: true && controller.steps.value == 6,
+                  autofocus: true && steps[controller.selectSteps.value] == 6,
                   controller: controller.code1Controller,
                   maxLength: 1,
                   borderColor: Colors.transparent,
@@ -883,6 +630,169 @@ class OtpView extends GetView<OnBoardingController> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TextView extends GetView<OnBoardingController> {
+  const TextView({
+    Key? key,
+    required this.query,
+    required this.theme,
+  }) : super(key: key);
+
+  final Size query;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlide(
+      offset: steps[controller.selectSteps.value] == 0
+          ? const Offset(0, 0)
+          : const Offset(1, 0),
+      duration: const Duration(milliseconds: kDefaultDuration),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(kDefaultPadding),
+        title: Text(
+          "title".tr(),
+          style: theme.textTheme.titleLarge,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("desc".tr()),
+            const Divider(),
+            Text("desc1".tr()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TextView1 extends GetView<OnBoardingController> {
+  const TextView1({
+    Key? key,
+    required this.query,
+    required this.theme,
+  }) : super(key: key);
+
+  final Size query;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlide(
+      offset: steps[controller.selectSteps.value] == 1
+          ? const Offset(0, 0)
+          : steps[controller.selectSteps.value] < 1
+              ? const Offset(-1, 0)
+              : const Offset(1, 0),
+      duration: const Duration(milliseconds: kDefaultDuration),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListTile(
+            contentPadding: const EdgeInsets.all(kDefaultPadding),
+            title: Text(
+              "title1".tr(),
+              style: theme.textTheme.titleLarge,
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("desc2".tr()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TextView2 extends GetView<OnBoardingController> {
+  const TextView2({
+    Key? key,
+    required this.query,
+    required this.theme,
+  }) : super(key: key);
+
+  final Size query;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlide(
+      offset: steps[controller.selectSteps.value] == 2
+          ? const Offset(0, 0)
+          : steps[controller.selectSteps.value] < 2
+              ? const Offset(-1, 0)
+              : const Offset(1, 0),
+      duration: const Duration(milliseconds: kDefaultDuration),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListTile(
+            contentPadding: const EdgeInsets.all(kDefaultPadding),
+            title: Text(
+              "title2".tr(),
+              style: theme.textTheme.titleLarge,
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("desc3".tr()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TextView3 extends GetView<OnBoardingController> {
+  const TextView3({
+    Key? key,
+    required this.query,
+    required this.theme,
+  }) : super(key: key);
+
+  final Size query;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlide(
+      offset: steps[controller.selectSteps.value] == 3
+          ? const Offset(0, 0)
+          : steps[controller.selectSteps.value] < 3
+              ? const Offset(-1, 0)
+              : const Offset(0, -0.35),
+      duration: const Duration(milliseconds: kDefaultDuration),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: kDefaultDuration),
+        opacity: steps[controller.selectSteps.value] <= 3 ? 1 : 0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListTile(
+              contentPadding: const EdgeInsets.all(kDefaultPadding),
+              title: Text(
+                "title3".tr(),
+                style: theme.textTheme.titleLarge,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("desc4".tr()),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

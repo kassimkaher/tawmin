@@ -13,7 +13,8 @@ class FDButton extends StatelessWidget {
       this.isLoading = false,
       this.padding,
       this.textStyle,
-      this.isunderLine = false})
+      this.isunderLine = false,
+      this.iconSize})
       : super(key: key);
 
   final IconData? icon;
@@ -26,6 +27,7 @@ class FDButton extends StatelessWidget {
   final TextStyle? textStyle;
   final EdgeInsetsGeometry? padding;
   final bool isunderLine;
+  final double? iconSize;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -47,12 +49,20 @@ class FDButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: icon != null && title.isEmpty
-              ? Icon(icon, color: color)
+              ? Icon(
+                  icon,
+                  color: color,
+                  size: iconSize ?? null,
+                )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (icon != null) ...[
-                      Icon(icon, color: color),
+                      Icon(
+                        icon,
+                        color: color,
+                        size: iconSize,
+                      ),
                       const SizedBox(width: kDefaultSpacing)
                     ],
                     isLoading

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/state_manager.dart';
+import 'package:tamine/model/selector_model.dart';
 import 'package:tamine/services/validation.dart';
 import 'package:tamine/utils/utils.dart';
 
@@ -17,10 +19,11 @@ class FDDropDownMenu extends StatelessWidget {
       this.leftPadding,
       this.rightPadding,
       this.topPadding,
-      required this.selectValue})
+      required this.selectValue,
+      this.readOnly = false})
       : super(key: key);
-  final List<String> array;
-  final Function(dynamic selectData) onSelect;
+  final List<OptionModel> array;
+  final Function(OptionModel selectData) onSelect;
   final String hint;
   final Color? background;
   final double? leftPadding;
@@ -29,14 +32,15 @@ class FDDropDownMenu extends StatelessWidget {
   final double? bottomPadding;
 
   final bool enable;
-  final Rx<TextEditingController>? selectValue;
+  final Rx<OptionModel>? selectValue;
   final Color? borderColor;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return DropdownButtonFormField(
-      value: selectValue != null && selectValue!.value.text.isNotEmpty
-          ? selectValue!.value.text
+    return DropdownButtonFormField<OptionModel>(
+      value: selectValue != null && selectValue!.value.index! < 10
+          ? array[selectValue!.value.index!]
           : null,
       icon: const RotatedBox(
         quarterTurns: 3,
@@ -48,7 +52,7 @@ class FDDropDownMenu extends StatelessWidget {
       ),
       style: theme.textTheme.bodyLarge,
       borderRadius: BorderRadius.circular(kDefaultBorderRadius),
-      alignment: Alignment.center,
+      alignment: Alignment.topRight,
       isExpanded: true,
       decoration: InputDecoration(
         fillColor: enable
@@ -100,21 +104,19 @@ class FDDropDownMenu extends StatelessWidget {
         ),
       ),
       items: array.map(
-        (String value) {
-          return DropdownMenuItem<String>(
+        (OptionModel value) {
+          return DropdownMenuItem<OptionModel>(
             value: value,
-            child: Text(value),
+            child: Text(value.title!.tr()),
           );
         },
       ).toList(),
-      onChanged: (a) => onSelect(a),
+      onChanged: readOnly ? null : (a) => onSelect(a!),
       validator: (h) {
         const validate = Validator.required;
-        if (!validate.isRequired(h != null ? h.toString() : null)) {
-          print("fd_dropdown===2");
+        if (!validate.isRequired(h != null ? h.title.toString() : null)) {
           return validate.hint();
         }
-        print("fd_dropdown===3");
 
         return null;
       },

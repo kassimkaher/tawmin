@@ -60,7 +60,7 @@ extension TextValidate on Validator {
   bool isNumebr(String value) {
     String patttern = r'^[0-9]+$';
     RegExp regExp = RegExp(patttern);
-    return regExp.hasMatch(value);
+    return regExp.hasMatch(value.replaceAll(",", ""));
   }
 
   bool isValidEmail(String a) {

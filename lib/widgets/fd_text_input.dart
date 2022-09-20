@@ -30,7 +30,10 @@ class FDTextInput extends HookWidget {
       this.suffixIcon,
       this.readOnly,
       this.isHidden,
-      this.isPopUpErrorMessage = false})
+      this.isPopUpErrorMessage = false,
+      this.onChanged,
+      this.errorStyle,
+      this.onTap})
       : super(key: key);
   final bool isPopUpErrorMessage;
   final bool? readOnly;
@@ -54,10 +57,14 @@ class FDTextInput extends HookWidget {
   final Validator? isRequired;
   final Validator? validator;
   final String? label;
+  final TextStyle? errorStyle;
+  final Function(String value)? onChanged;
+  final Function()? onTap;
   final void Function(bool isFocus)? onFocus;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final query = MediaQuery.of(context);
     final isFocus = useState(false);
 
     final isValidate = useState(0);
@@ -83,6 +90,8 @@ class FDTextInput extends HookWidget {
             controller: controller,
             readOnly: readOnly ?? false,
             enabled: enable,
+            onTap: onTap ?? null,
+            onChanged: (value) => onChanged != null ? onChanged!(value) : null,
             decoration: InputDecoration(
               fillColor: isHidden != null && isHidden == true
                   ? Colors.transparent
@@ -91,20 +100,11 @@ class FDTextInput extends HookWidget {
                       : disableColor ?? Colors.transparent,
               filled: true,
               hintText: label,
-              suffixIcon: suffixIcon ?? SizedBox()
-              //  isValidate.value == 0 || !isPopUpErrorMessage
-              //     ? null
-              //     : IconButton(
-              //         icon: const Icon(Icons.info_outline),
-              //         color: isValidate.value == 0
-              //             ? Colors.transparent
-              //             : theme.colorScheme.secondary,
-              //         onPressed: () => showMessage(isShowMessage),
-              // )
-              ,
+              suffixIcon: suffixIcon,
               errorStyle: isPopUpErrorMessage
                   ? const TextStyle(fontSize: 0, height: 0)
-                  : theme.textTheme.bodySmall?.copyWith(color: Colors.red),
+                  : errorStyle ??
+                      theme.textTheme.bodySmall?.copyWith(color: Colors.red),
               prefixIcon: icon != null
                   ? Padding(
                       padding: EdgeInsets.only(

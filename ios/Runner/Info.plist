@@ -55,11 +55,10 @@
 	<array>
 		<string>A0000002471001</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
-	<key>NSCameraUsageDescription</key>
-	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app require permission to access gallery</string>
+
+	
 </dict>
 </plist>
